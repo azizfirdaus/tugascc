@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload ke S3</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light d-flex justify-content-center align-items-center vh-100">
+    <div class="container text-center">
+        <div class="card shadow p-4" style="max-width: 450px; margin: auto;">
+            <h1 class="h4 mb-3 text-primary">Upload File ke S3</h1>
+            <form action="/upload" method="post" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <input type="file" class="form-control" name="file" required>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Upload</button>
+            </form>
+            <h2 class="h5 mt-4">File yang Sudah Diupload</h2>
+            <ul id="file-list" class="list-group mt-2"></ul>
+        </div>
+        <footer class="mt-4 text-muted">
+            <small>Raden Nuralif 152021029</small>
+        </footer>
+    </div>
+  
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        async function fetchFiles() {
+            try {
+                const response = await fetch('/files');
+                if (!response.ok) throw new Error("Gagal mengambil data file.");
+                const files = await response.json();
+                const fileList = document.getElementById('file-list');
+                fileList.innerHTML = '';
+
+                if (files.length === 0) {
+                    fileList.innerHTML = '<li class="list-group-item text-muted">Tidak ada file yang tersedia</li>';
+                } else {
+                    files.forEach(file => {
+                        const listItem = document.createElement('li');
+                        listItem.className = 'list-group-item d-flex justify-content-between align-items-center';
+                        listItem.innerHTML = `<a href="${file.url}" target="_blank" class="text-decoration-none">${file.name}</a>`;
+                        fileList.appendChild(listItem);
+                    });
+                }
+            } catch (error) {
+                console.error('Error fetching files:', error);
+                document.getElementById('file-list').innerHTML = '<li class="list-group-item text-danger">Gagal memuat file</li>';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', fetchFiles);
+    </script>
+</body>
+</html>
