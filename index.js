@@ -5,11 +5,11 @@ const fs = require('fs');
 
 const app = express();
 
-AWS.config.update({
-  accessKeyId: 'AKIATBRPQQOWCIPZ645E', // Ganti dengan Access Key ID Anda
-  secretAccessKey: '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', // Ganti dengan Secret Access Key Anda
-  region: 'us-east-1c' // Sesuaikan dengan region Anda
-});
+//AWS.config.update({
+  //accessKeyId: 'AKIATBRPQQOWCIPZ645E', // Ganti dengan Access Key ID Anda
+  //secretAccessKey: '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', // Ganti dengan Secret Access Key Anda
+  //region: 'us-east-1c' // Sesuaikan dengan region Anda
+//});
 
 const s3 = new AWS.S3();
 const upload = multer({ dest: 'uploads/' });
