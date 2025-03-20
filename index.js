@@ -19,7 +19,7 @@ app.use(express.static('views'));
 app.post('/upload', upload.single('file'), (req, res) => {
   const fileContent = fs.readFileSync(req.file.path);
   const params = {
-    Bucket: 'alipbucket', // Ganti dengan nama bucket Anda
+    Bucket: 'azizfirdaus', // Ganti dengan nama bucket Anda
     Key: req.file.originalname,
     Body: fileContent
   };
@@ -36,7 +36,7 @@ app.post('/upload', upload.single('file'), (req, res) => {
 // Endpoint untuk mendapatkan daftar file dari S3
 app.get('/files', async (req, res) => {
   try {
-    const params = { Bucket: 'alipbucket' }; // Ganti dengan nama bucket Anda
+    const params = { Bucket: 'azizfirdaus' }; // Ganti dengan nama bucket Anda
     const data = await s3.listObjectsV2(params).promise();
     
     const files = data.Contents.map(item => ({
